@@ -15,7 +15,6 @@ private:
     void update(sf::Time deltaTime);
     void render();
     void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
-    void clearMovements();
 
 private:
     sf::RenderWindow mWindow;
@@ -23,7 +22,7 @@ private:
 
     bool mIsMovingUp, mIsMovingDown, mIsMovingLeft, mIsMovingRight;
 
-    static constexpr float PlayerSpeed = 5000.f;
+    static constexpr float PlayerSpeed = 50.f;
 };
 
 #endif // GAME_H

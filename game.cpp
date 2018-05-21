@@ -1,6 +1,11 @@
 #include "game.h"
 
-Game::Game() : mWindow(sf::VideoMode(640, 480), "SFML Application"), mPlayer()
+Game::Game() : mWindow(sf::VideoMode(640, 480), "SFML Application"),
+    mPlayer(),
+    mIsMovingUp(false),
+    mIsMovingDown(false),
+    mIsMovingLeft(false),
+    mIsMovingRight(false)
 {
     mPlayer.setRadius(40.f);
     mPlayer.setPosition(100.f, 100.f);
@@ -9,7 +14,7 @@ Game::Game() : mWindow(sf::VideoMode(640, 480), "SFML Application"), mPlayer()
 void Game::run()
 {
     sf::Clock clock;
-    auto TimePerFrame = sf::seconds(50.f / 60.f);
+    auto TimePerFrame = sf::seconds(1.f / 60.f);
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
     while (mWindow.isOpen())
     {
@@ -17,13 +22,12 @@ void Game::run()
         timeSinceLastUpdate += clock.restart();
         while (timeSinceLastUpdate > TimePerFrame)
         {
-            timeSinceLastUpdate -= TimePerFrame;
             processEvents();
+            timeSinceLastUpdate -= TimePerFrame;
             update(TimePerFrame);
-            clearMovements();
+
         }
         render();
-        clearMovements();
     }
 }
 
@@ -59,9 +63,8 @@ void Game::update(sf::Time deltaTime)
     if (mIsMovingRight)
         movement.x += PlayerSpeed;
 
-    auto move = movement * deltaTime.asSeconds();
     std::cout << "delta time " << deltaTime.asSeconds() << std::endl;
-    mPlayer.move(move);
+    mPlayer.move(movement * deltaTime.asSeconds());
 }
 
 void Game::render()
@@ -83,10 +86,3 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
         mIsMovingRight = isPressed;
 }
 
-void Game::clearMovements()
-{
-    mIsMovingUp = false;
-    mIsMovingDown = false;
-    mIsMovingLeft = false;
-    mIsMovingRight = false;
-}
