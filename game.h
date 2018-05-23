@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "fps.h"
 
 class Game
 {
@@ -16,9 +17,20 @@ private:
     void render();
     void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 
+    void CollisionDetect();
+
+    Fps mfps;
+
 private:
     sf::RenderWindow mWindow;
-    sf::CircleShape mPlayer;
+//    sf::CircleShape mPlayer;
+
+    sf::Texture mTexture;
+    sf::Sprite mPlayer;
+    sf::Font mFont;
+    sf::Text mText;
+
+    sf::RectangleShape mWall;
 
     bool mIsMovingUp, mIsMovingDown, mIsMovingLeft, mIsMovingRight;
 
